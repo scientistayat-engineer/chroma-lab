@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <title>Chroma Lab — AI Knowledge Workspace</title><link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <meta name="description" content="Your AI-powered document knowledge workspace.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="app">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">✳</div>
+        <div>
+          <h1>Chroma <span>Lab</span></h1>
+          <p>AI KNOWLEDGE WORKSPACE</p>
+        </div>
+      </div>
+
+      <div class="connection-card">
+        <span class="status-dot" id="healthDot"></span>
+        <div class="connection-text">
+          <strong id="healthText">Connecting...</strong>
+          <small id="healthDetail">Checking backend</small>
+        </div>
+        <button class="icon-btn" id="refreshBtn" type="button"
+          title="Refresh status and documents" aria-label="Refresh status">↻</button>
+      </div>
+
+      <div class="section-heading">YOUR KNOWLEDGE</div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>Indexed chunks</span>
+          <strong id="chunkCount">—</strong>
+          <small>Knowledge units</small>
+        </div>
+        <div class="stat-card">
+          <span>Documents</span>
+          <strong id="docCount">—</strong>
+          <small>Indexed files</small>
+        </div>
+      </div>
+
+      <div class="section-heading upload-heading">ADD KNOWLEDGE</div>
+
+      <div class="dropzone" id="dropzone" role="button" tabindex="0"
+        aria-label="Choose documents to upload">
+        <div class="upload-icon">↑</div>
+        <strong>Drop files here</strong>
+        <p>or click to browse</p>
+        <span>PDF · TXT · MD</span>
+      </div>
+
+      <input id="fileInput" type="file" accept=".pdf,.txt,.md"
+        multiple hidden>
+
+      <button class="primary-btn upload-btn" id="uploadBtn" type="button">
+        <span>＋</span> Choose documents
+      </button>
+
+      <div class="upload-progress" id="uploadProgress" hidden>
+        <div class="progress-track"><div id="progressBar"></div></div>
+        <span id="uploadStatus">Preparing files...</span>
+      </div>
+
+      <div class="documents-heading">
+        <div class="section-heading">INDEXED DOCUMENTS</div>
+        <span id="documentBadge">0</span>
+      </div>
+
+      <div class="file-list" id="fileList">
+        <div class="list-placeholder">Loading documents...</div>
+      </div>
+
+      <div class="sidebar-footer">
+        <span class="footer-orb">✧</span>
+        <div>
+          <strong>Private knowledge space</strong>
+          <small>Powered by ChromaDB + Groq</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn menu-btn" id="menuBtn" type="button"
+            aria-label="Toggle sidebar">☰</button>
+          <div>
+            <div class="breadcrumb">WORKSPACE <span>/</span> CHAT</div>
+            <h2>Knowledge Assistant</h2>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <span class="live-indicator"><span></span> RAG WORKSPACE</span>
+          <button class="secondary-btn" id="resetBtn" type="button"
+            title="Clear indexed knowledge">Reset knowledge</button>
+        </div>
+      </header>
+
+      <section class="welcome-panel">
+        <div class="welcome-content">
+          <div class="eyebrow"><span>✦</span> YOUR AI KNOWLEDGE SPACE</div>
+          <h2>Think deeper.<br><span>Know more.</span></h2>
+          <p>
+            Ask questions about your documents. Get AI-generated answers
+            grounded in your indexed knowledge, with sources you can verify.
+          </p>
+          <div class="feature-tags">
+            <span>◈ Retrieval-Augmented Generation</span>
+            <span>⬡ ChromaDB</span>
+            <span>ϟ Groq AI</span>
+          </div>
+        </div>
+        <div class="welcome-visual" aria-hidden="true">
+          <div class="visual-ring ring-one"></div>
+          <div class="visual-ring ring-two"></div>
+          <div class="visual-ring ring-three"></div>
+          <div class="visual-core">✳</div>
+          <span class="orbit-node node-one">◈</span>
+          <span class="orbit-node node-two">✧</span>
+          <span class="orbit-node node-three">⌘</span>
+        </div>
+      </section>
+
+      <section class="suggestion-section">
+        <div class="suggestion-title"><span>✧</span> START A CONVERSATION</div>
+        <div class="suggestions">
+          <button class="suggestion" type="button"
+            data-question="Summarize my uploaded documents">
+            <span>▤</span><span>Summarize my documents</span><b>↗</b>
+          </button>
+          <button class="suggestion" type="button"
+            data-question="What are the key takeaways from my documents?">
+            <span>◈</span><span>Find key takeaways</span><b>↗</b>
+          </button>
+          <button class="suggestion" type="button"
+            data-question="Explain the main concepts in simple language">
+            <span>✦</span><span>Explain a topic simply</span><b>↗</b>
+          </button>
+        </div>
+      </section>
+
+      <div class="chat-divider"><span></span></div>
+
+      <section class="chat-section">
+        <div class="chat-heading">
+          <div>
+            <h3>Conversation</h3>
+            <p>Answers from your indexed knowledge</p>
+          </div>
+          <button class="text-btn" id="clearChatBtn" type="button">
+            Clear chat
+          </button>
+        </div>
+
+        <div class="chat-thread" id="chatThread" aria-live="polite">
+          <div class="empty-state" id="emptyState">
+            <div class="empty-orb">✳</div>
+            <h3>Your next insight starts here.</h3>
+            <p>Upload your documents, then ask a question to explore your knowledge.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="composer-area">
+        <form class="composer" id="askForm">
+          <textarea id="askInput" rows="1" maxlength="4000"
+            placeholder="Ask anything about your documents..."
+            aria-label="Your question"></textarea>
+          <div class="composer-bottom">
+            <div class="composer-hint">
+              <span>✧</span> Grounded answers from your knowledge base
+              <span class="hint-separator">·</span> Enter to send
+            </div>
+            <button class="send-btn" id="askBtn" type="submit">
+              <span>Ask Chroma</span><span>↑</span>
+            </button>
+          </div>
+        </form>
+        <p class="disclaimer">
+          AI-generated responses may need verification. Always check cited sources.
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"
+    aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.env
+chroma_db/
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+.firebase/
+firebase-debug.log
+data/*.pdf
+data/*.txt
+!data/sample.txt
+data/*.md
